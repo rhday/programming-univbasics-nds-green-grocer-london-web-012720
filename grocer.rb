@@ -49,9 +49,23 @@ coupons_index = 0
 end
 
 def apply_clearance(cart)
-  # Consult README for inputs and outputs
-  #
-  # REMEMBER: This method **should** update cart
+
+ cart_index = 0
+  ready_for_checkout = Array.new
+
+  while cart_index < cart.size do
+    current_item = cart[cart_index]
+    if (current_item[:clearance])
+      current_item[:price] = current_item[:price] - (current_item[:price] * 0.20)
+    end
+
+    ready_for_checkout.push( current_item )
+    cart_index += 1 
+
+  end
+
+  ready_for_checkout
+
 end
 
 def checkout(cart, coupons)
