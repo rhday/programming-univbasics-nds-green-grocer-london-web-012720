@@ -1,3 +1,42 @@
+def increment_count_of_item (cart, item_name)
+
+  cart_index = 0
+
+  while cart_index < cart.size do
+    current_item = cart[cart_index]
+
+    if (current_item[:item] == item_name )
+      current_item[:count] += 1
+    end
+
+    cart_index += 1
+
+  end
+
+  cart
+
+end 
+
+
+def find_item_by_name_in_collection(name, collection)
+
+collection_index = 0
+
+  while collection_index < collection.size do
+    current_item = collection[collection_index]
+
+    if ( current_item[:item] == name )
+      return current_item
+
+    end
+
+    collection_index += 1
+
+  end
+
+  nil
+
+end
 
 
 def consolidate_cart(cart)
@@ -51,43 +90,32 @@ end
 def apply_clearance(cart)
 
  cart_index = 0
-  ready_for_checkout = Array.new
-
+  ready_for_checkout = []
   while cart_index < cart.size do
     current_item = cart[cart_index]
     if (current_item[:clearance])
       current_item[:price] = current_item[:price] - (current_item[:price] * 0.20)
     end
-
     ready_for_checkout.push( current_item )
     cart_index += 1 
-
   end
-
   ready_for_checkout
-
 end
 
 def checkout(cart, coupons)
-
 checkout = consolidate_cart(cart)
   checkout = apply_coupons(checkout,coupons)
   checkout = apply_clearance(checkout)
-
   index = 0
   grand_total = 0
-
   while index < checkout.size do
     current_item_total = checkout[index][:price] * checkout[index][:count]
     current_item_total.round(2)
     grand_total += current_item_total
     index += 1
   end
-
   if ( grand_total > 100 )
     grand_total *= 0.90
   end
-
   grand_total
-  
 end
